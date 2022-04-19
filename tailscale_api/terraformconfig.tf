@@ -17,7 +17,7 @@ terraform {
 
 # Configure the Okta Provider with okta service account token
 provider "okta" {
-  org_name  = "cedar"
+  org_name  = "org_name"
   base_url  = "okta.com"
   api_token = local.okta_api
 }
@@ -25,7 +25,7 @@ provider "okta" {
 # Configure the Tailscale Provider with tailscale service account token
 provider "tailscale" {
   api_key = local.tailscale_api
-  tailnet = "cedar.com"
+  tailnet = "org_tailnet_name"
 }
 
 provider "aws" {
