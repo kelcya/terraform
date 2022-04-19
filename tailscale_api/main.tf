@@ -1,7 +1,7 @@
 locals {
   tailscale_api = jsondecode(data.aws_secretsmanager_secret_version.ts_api_current.secret_string)["tailscale_api"]
   okta_api      = jsondecode(data.aws_secretsmanager_secret_version.okta_api_current.secret_string)["okta_api"]
-  tailscale_users = {
+  group1 = {
     name    = "group:group1"
     members = values(data.okta_user.group1_user)[*].email
   }
