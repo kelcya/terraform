@@ -1,0 +1,39 @@
+#!/usr/bin/env groovy
+pipeline {
+  tools {
+    terraform 'Terraform_1.1.7'
+  }
+  agent any
+  options {
+    buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '10'))
+    timestamps()
+    ansiColor('xterm')
+  }
+
+  triggers {
+    cron('0 19 * * 1-5')
+  }
+
+  stages {
+    stage('Terraform init') {
+      steps {
+        dir('path_to_your_terraform_tailscale_api') {
+          sh "terraform init"
+        }
+      }
+    }
+
+    stage('Terraform apply') {
+      steps {
+        dir('path_to_your_terraform_tailscale_api') {
+          sh "terraform apply -auto-approve"
+        }
+      }
+    }
+  }
+  post {
+    failure {
+      mail body: "Project: ${env.JOB_NAME} <br> Build Number: ${env.BUILD_NUMBER} <br> Build: ${env.BUILD_URL}", charset: 'UTF-8', mimeType: 'text/html', subject: 'Taiscale_api jenkins job failure', to: 'your_email@domain.com';
+    }
+  }
+} 
