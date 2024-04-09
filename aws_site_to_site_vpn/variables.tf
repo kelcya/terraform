@@ -246,3 +246,8 @@ variable "vpn_connection_tunnel_inside_ip_version" {
     error_message = "Invalid input, options: \"ipv4\", \"ipv6\"."
   }
 }
+
+variable "vpn_connections" {
+  description = "VPN connection information"
+  type = map(any)
+}
